@@ -1,0 +1,18 @@
+{
+  "name": "arthu/vaagas_api",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    },
+    "files": [
+      "config.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Arthur Henrique",
+      "email": "arthur12souza@hotmail.com"
+    }
+  ],
+  "require": {}
+}
