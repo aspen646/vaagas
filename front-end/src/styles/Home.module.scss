@@ -1,0 +1,21 @@
+@import "variables";
+
+.auth__section {
+  position: relative;
+  min-height: 100vh;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-image: url('../../public/auth/user_bg.png');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    -o-object-fit: cover;
+    object-fit: cover;
+    left: 0;
+    top: 0;
+  }
+}
