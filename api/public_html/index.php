@@ -1,9 +1,10 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: *');
+header('Content-Type: application/json');
 
 require_once '../vendor/autoload.php';
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
 
 // api/user/1

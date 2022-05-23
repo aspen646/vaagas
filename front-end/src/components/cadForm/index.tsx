@@ -1,10 +1,49 @@
-import Image from "next/image";
 import Link from "next/link";
 import styles from "./styles.module.scss";
 
 import { FiArrowLeft } from "react-icons/fi";
+import { useState } from "react";
+
+import baseUrl from "../../config/baseUrl";
+
+import { Ring } from "@uiball/loaders";
 
 export function CadForm() {
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [senha, setSenha] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  function handler(event: any) {
+    event.preventDefault();
+    setIsLoading(true);
+
+    fetch(`${baseUrl}/auth/cadastro`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        nome,
+        cpfCnpj,
+        email,
+        senha,
+        tipo: "user",
+      }),
+    }).then((res) => {
+      if (res.status == 200) {
+        setIsLoading(false);
+        // alert("deu bom");
+      } else if (res.status == 400) {
+        setIsLoading(false);
+        // alert("erro");
+      }
+    });
+  }
+
   return (
     <div className={`${styles.auth__form__container} container`}>
       <div className={styles.form__title}>
@@ -15,46 +54,48 @@ export function CadForm() {
         </Link>
         <h1>Cadastro</h1>
       </div>
-      <form action="" method="post">
+      <form onSubmit={handler} method="post">
         <input
           type="text"
           name="nome"
-          id=""
           placeholder="Nome"
           className={`default__input`}
+          value={nome}
+          onChange={(data) => setNome(data.target.value)}
           required
         />
         <input
           type="text"
           name="cpfCnpj"
-          id=""
           placeholder="CPF"
           className={`default__input`}
+          value={cpfCnpj}
+          onChange={(data) => setCpfCnpj(data.target.value)}
           required
         />
         <input
           type="email"
           name="email"
-          id=""
           placeholder="Email"
           className={`default__input`}
+          value={email}
+          onChange={(data) => setEmail(data.target.value)}
           required
         />
         <input
           type="password"
           name="senha"
-          id=""
           placeholder="Senha"
           className={`default__input`}
+          value={senha}
+          onChange={(data) => setSenha(data.target.value)}
           required
         />
-        <input type="hidden" name="tipo" value="user" />
         <button
           type="submit"
-          id=""
           className={`${styles.form__button} default__input`}
         >
-          Cadastrar
+          {!isLoading ? "Cadastrar" : <Ring color="#000410" size={48} />}
         </button>
       </form>
     </div>

@@ -5,24 +5,39 @@ import styles from "./styles.module.scss";
 
 import baseUrl from "../../config/baseUrl";
 
+import { Ring } from "@uiball/loaders";
+
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   function handler(event: any) {
     event.preventDefault();
+    setIsLoading(true);
 
-    fetch(`${baseUrl}/auth`, {
-      method: "GET",
+    fetch(`${baseUrl}/auth/login`, {
+      method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      body: JSON.stringify({
+        email,
+        senha,
+        tipo: "user",
+      }),
     }).then((res) => {
       if (res.status == 200) {
-        alert("deu bom");
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          console.log(resolve.data);
+        });
       } else if (res.status == 400) {
-        alert("erro");
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
       }
     });
   }
@@ -58,12 +73,11 @@ export function LoginForm() {
           onChange={(data) => setSenha(data.target.value)}
           required
         />
-        <input type="hidden" name="tipo" value="user" />
         <button
           type="submit"
           className={`${styles.form__button} default__input`}
         >
-          Entrar
+          {!isLoading ? "Entrar" : <Ring color="#000410" size={48} />}
         </button>
         <div className={styles.form__cadastro}>
           <Link
