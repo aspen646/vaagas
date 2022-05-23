@@ -33,3 +33,11 @@ if ($_GET['url']) {
     }
   }
 }
+
+// $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+// $sql = "SHOW TABLES FROM " . DBNAME;
+// $stmt = $connPdo->prepare($sql);
+
+// $stmt->execute();
+
+// var_dump($stmt->fetch(PDO::FETCH_ASSOC));

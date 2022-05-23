@@ -81,7 +81,7 @@ export function LoginForm() {
         </button>
         <div className={styles.form__cadastro}>
           <Link
-            href={{ pathname: "/auth/user", query: { cadastro: "true" } }}
+            href={{ pathname: "/auth", query: { cadastro: "true" } }}
             passHref
           >
             <a>

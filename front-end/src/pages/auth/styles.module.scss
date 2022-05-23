@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@import "../../styles/variables";
 
 .header__container {
   position: relative;
@@ -54,12 +54,28 @@
     min-height: unset;
   }
 
+  &.auth__empresa {
+    &::before {
+      background-image: url("../../../public/images/auth/empresa_bg.png");
+      animation: changeBg .3s ease-in-out;
+    }
+
+    @keyframes changeBg {
+      0%{
+        opacity: 0;
+      }100%{
+        opacity: 1;
+      }
+      
+    }
+  }
+
   &::before {
     content: "";
     position: absolute;
     width: 50%;
     height: 100%;
-    background-image: url("../../../../public/images/auth/user_bg.png");
+    background-image: url("../../../public/images/auth/user_bg.png");
     background-repeat: no-repeat;
     background-position: top;
     background-size: cover;

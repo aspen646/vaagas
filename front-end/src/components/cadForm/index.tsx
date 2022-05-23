@@ -47,7 +47,7 @@ export function CadForm() {
   return (
     <div className={`${styles.auth__form__container} container`}>
       <div className={styles.form__title}>
-        <Link href={"/auth/user"} passHref>
+        <Link href={"/auth"} passHref>
           <a>
             <FiArrowLeft size={28} color="#000410" />
           </a>
