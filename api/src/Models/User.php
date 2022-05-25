@@ -10,23 +10,28 @@ class User
   private static $table = 'user';
 
   //LOGIN USUARIO/EMPRESA
-  public static function login(object $data)
+  public static function login(object $data = null)
   {
-    $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+    try{
+      $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
 
-    $sql = 'SELECT * FROM ' . self::$table . ' WHERE email = :email and senha = :senha and tipo = :tipo';
-    $stmt = $connPdo->prepare($sql);
-    $stmt->bindValue(':email', $data->email);
-    $stmt->bindValue(':senha', $data->senha);
-    $stmt->bindValue(':tipo', $data->tipo);
-    $stmt->execute();
+      $sql = 'SELECT * FROM ' . self::$table . ' WHERE email = :email and senha = :senha and tipo = :tipo';
+      $stmt = $connPdo->prepare($sql);
+      $stmt->bindValue(':email', $data->email);
+      $stmt->bindValue(':senha', $data->senha);
+      $stmt->bindValue(':tipo', $data->tipo);
+      $stmt->execute();
 
-    if ($stmt->rowCount() > 0) {
-      http_response_code(200);
-      return $stmt->fetch(PDO::FETCH_ASSOC);
-    } else {
-      http_response_code(400);
-      throw new Exception("Email ou senha incorretos.");
+      if ($stmt->rowCount() > 0) {
+        http_response_code(200);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      } else {
+        http_response_code(400);
+        throw new Exception("Email ou senha incorretos.");
+      }
+
+    }catch(\Exception $e){
+      throw new Exception ($e);
     }
   }
 

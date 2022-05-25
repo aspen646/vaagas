@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .auth__form__container {
-  animation: enter .8s ease-in-out;
+  animation: enter 0.8s ease-in-out;
 
   @keyframes enter {
     0% {
@@ -15,6 +15,15 @@
   }
 
   .form__title {
+    &.empresa {
+      h1 {
+        max-width: 392px;
+      }
+      p {
+        max-width: 314px;
+      }
+    }
+
     h1 {
       font-weight: 600;
       font-size: 36px;

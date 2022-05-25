@@ -2,11 +2,12 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 
 import { FiArrowLeft } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import baseUrl from "../../config/baseUrl";
 
 import { Ring } from "@uiball/loaders";
+import { useRouter } from "next/router";
 
 export function CadForm() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,9 @@ export function CadForm() {
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [senha, setSenha] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [empresaMode, setEmpresaMode] = useState(false);
+
+  const router = useRouter();
 
   function handler(event: any) {
     event.preventDefault();
@@ -31,7 +35,7 @@ export function CadForm() {
         cpfCnpj,
         email,
         senha,
-        tipo: "user",
+        tipo: empresaMode ? "empresa" : "user",
       }),
     }).then((res) => {
       if (res.status == 200) {
@@ -44,10 +48,27 @@ export function CadForm() {
     });
   }
 
+  useEffect(() => {
+    // router.query.type ? setEmpresaMode(true) : setEmpresaMode(false);
+    setEmpresaMode(() => {
+      if (router.query.empresa == "true") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }, [router.query]);
+
   return (
     <div className={`${styles.auth__form__container} container`}>
       <div className={styles.form__title}>
-        <Link href={"/auth"} passHref>
+        <Link
+          href={{
+            pathname: "/auth",
+            query: { empresa: empresaMode ? "true" : "false" },
+          }}
+          passHref
+        >
           <a>
             <FiArrowLeft size={28} color="#000410" />
           </a>
@@ -67,7 +88,7 @@ export function CadForm() {
         <input
           type="text"
           name="cpfCnpj"
-          placeholder="CPF"
+          placeholder={empresaMode ? "CNPJ" : "CPF"}
           className={`default__input`}
           value={cpfCnpj}
           onChange={(data) => setCpfCnpj(data.target.value)}

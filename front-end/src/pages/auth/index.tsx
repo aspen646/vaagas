@@ -17,7 +17,14 @@ const Auth: NextPage = () => {
 
   useEffect(() => {
     router.query.cadastro ? setFormCadastro(true) : setFormCadastro(false);
-    router.query.type ? setEmpresaMode(true) : setEmpresaMode(false);
+    // router.query.type ? setEmpresaMode(true) : setEmpresaMode(false);
+    setEmpresaMode(() => {
+      if (router.query.empresa == "true") {
+        return true;
+      } else {
+        return false;
+      }
+    });
   }, [router.query]);
   return (
     <>
@@ -29,12 +36,18 @@ const Auth: NextPage = () => {
           <div className={styles.header__wrapper}>
             <Image src="/logo.svg" width={142} height={30} alt="Logo Vaagas" />
 
-            <Link href={{ pathname: "/auth", query: {type: "empresa"} }} passHref>
+            <Link
+              href={{
+                pathname: "/auth",
+                query: { empresa: empresaMode ? "false" : "true" },
+              }}
+              passHref
+            >
               <button
                 type="button"
                 className={`${styles.header__empresa} default__input`}
               >
-                Sou uma empresa
+                {empresaMode ? "Sou um usuário" : "Sou uma empresa"}
               </button>
             </Link>
           </div>
@@ -42,7 +55,11 @@ const Auth: NextPage = () => {
       </header>
 
       <main>
-        <section className={`${styles.auth__section} ${empresaMode && styles.auth__empresa}`}>
+        <section
+          className={`${styles.auth__section} ${
+            empresaMode && styles.auth__empresa
+          }`}
+        >
           <div className={styles.auth__container}>
             <div className={styles.auth__content}>
               {!formCadastro ? <LoginForm /> : <CadForm />}

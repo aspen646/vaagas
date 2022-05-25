@@ -1,16 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 
 import baseUrl from "../../config/baseUrl";
 
 import { Ring } from "@uiball/loaders";
+import { useRouter } from "next/router";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [empresaMode, setEmpresaMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
   function handler(event: any) {
     event.preventDefault();
     setIsLoading(true);
@@ -25,13 +30,13 @@ export function LoginForm() {
       body: JSON.stringify({
         email,
         senha,
-        tipo: "user",
+        tipo: empresaMode ? "empresa" : "user",
       }),
     }).then((res) => {
       if (res.status == 200) {
         setIsLoading(false);
-        Promise.resolve(res.json()).then((resolve) => {
-          console.log(resolve.data);
+        Promise.resolve(res).then((resolve) => {
+          console.log(resolve);
         });
       } else if (res.status == 400) {
         setIsLoading(false);
@@ -42,17 +47,27 @@ export function LoginForm() {
     });
   }
 
+  useEffect(() => {
+    setEmpresaMode(() => {
+      if (router.query.empresa == "true") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }, [router.query]);
+
   return (
     <div className={`${styles.auth__form__container} container`}>
-      <div className={styles.form__title}>
+      <div className={`${styles.form__title} ${styles.empresa}`}>
         <Image
-          src="/images/auth/briefcase_icon.svg"
+          src={!empresaMode? "/images/auth/briefcase_icon.svg" : "/images/auth/globe_icon.svg"}
           width={36}
           height={36}
           alt="Emoji maleta"
         />
-        <h1>A sua oportunidade está aqui.</h1>
-        <p>Uma comunidade com mais de 8.000 vagas disponíveis todos os dias.</p>
+        <h1>{!empresaMode? "A sua oportunidade está aqui." : "Selecione os melhores candidatos."}</h1>
+        <p>{!empresaMode? "Uma comunidade com mais de 8.000 vagas disponíveis todos os dias." : "Mais de 35.000 usuários ativos, crie uma vaga e escolha os seus candidatos."}</p>
       </div>
       <form onSubmit={handler} method="get">
         <input
@@ -81,7 +96,10 @@ export function LoginForm() {
         </button>
         <div className={styles.form__cadastro}>
           <Link
-            href={{ pathname: "/auth", query: { cadastro: "true" } }}
+            href={{
+              pathname: "/auth",
+              query: { cadastro: "true", empresa: empresaMode },
+            }}
             passHref
           >
             <a>
