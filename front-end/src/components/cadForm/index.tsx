@@ -38,12 +38,17 @@ export function CadForm() {
         tipo: empresaMode ? "empresa" : "user",
       }),
     }).then((res) => {
-      if (res.status == 200) {
+      console.log(res);
+      if (res.status == 201) {
         setIsLoading(false);
-        // alert("deu bom");
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
       } else if (res.status == 400) {
         setIsLoading(false);
-        // alert("erro");
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
       }
     });
   }

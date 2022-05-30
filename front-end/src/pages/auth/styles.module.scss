@@ -57,7 +57,7 @@
   &.auth__empresa {
     &::before {
       background-image: url("../../../public/images/auth/empresa_bg.png");
-      animation: changeBg .3s ease-in-out;
+      animation: changeBg 1s ease-in-out;
     }
 
     @keyframes changeBg {

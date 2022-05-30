@@ -1,21 +1,39 @@
 @import "variables";
 
-.auth__section {
-  position: relative;
+.main__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
   min-height: 100vh;
+  flex-direction: column;
+  gap: 4rem;
 
-  &::before {
-    content: "";
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background-image: url('../../public/images/auth/user_bg.png');
-    background-repeat: no-repeat;
-    background-position: top;
-    background-size: cover;
-    -o-object-fit: cover;
-    object-fit: cover;
-    left: 0;
-    top: 0;
+  svg {
+    animation: flick 1.3s infinite;
   }
+}
+
+@keyframes flick {
+  0% {
+    opacity: 100%;
+  }
+
+  25% {
+    opacity: 25%;
+  }
+
+  50% {
+    opacity: 50%;
+  }
+
+  75% {
+    opacity: 75%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+  
 }

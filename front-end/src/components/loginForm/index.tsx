@@ -35,9 +35,14 @@ export function LoginForm() {
     }).then((res) => {
       if (res.status == 200) {
         setIsLoading(false);
-        Promise.resolve(res).then((resolve) => {
-          console.log(resolve);
-        });
+        Promise.resolve(res.json())
+          .then((resolve) => {
+            localStorage.setItem("id", resolve.data.id);
+            localStorage.setItem("tipo", resolve.data.tipo);
+          })
+          .then(() => {
+            router.push("/");
+          });
       } else if (res.status == 400) {
         setIsLoading(false);
         Promise.resolve(res.json()).then((resolve) => {
@@ -61,13 +66,25 @@ export function LoginForm() {
     <div className={`${styles.auth__form__container} container`}>
       <div className={`${styles.form__title} ${styles.empresa}`}>
         <Image
-          src={!empresaMode? "/images/auth/briefcase_icon.svg" : "/images/auth/globe_icon.svg"}
+          src={
+            !empresaMode
+              ? "/images/auth/briefcase_icon.svg"
+              : "/images/auth/globe_icon.svg"
+          }
           width={36}
           height={36}
           alt="Emoji maleta"
         />
-        <h1>{!empresaMode? "A sua oportunidade está aqui." : "Selecione os melhores candidatos."}</h1>
-        <p>{!empresaMode? "Uma comunidade com mais de 8.000 vagas disponíveis todos os dias." : "Mais de 35.000 usuários ativos, crie uma vaga e escolha os seus candidatos."}</p>
+        <h1>
+          {!empresaMode
+            ? "A sua oportunidade está aqui."
+            : "Selecione os melhores candidatos."}
+        </h1>
+        <p>
+          {!empresaMode
+            ? "Uma comunidade com mais de 8.000 vagas disponíveis todos os dias."
+            : "Mais de 35.000 usuários ativos, crie uma vaga e escolha os seus candidatos."}
+        </p>
       </div>
       <form onSubmit={handler} method="get">
         <input
