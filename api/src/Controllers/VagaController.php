@@ -6,7 +6,7 @@ use App\Models\Vaga;
 
 class VagaController
 {
-  public function get($tipo = null)
+  public function get($tipo = null, $id = null)
   {
     if ($tipo) {
       if ($tipo === 'todos') {
@@ -14,8 +14,8 @@ class VagaController
         // return 'caiu no todos';
         return Vaga::listarTodos($data);
       } else if ($tipo === 'empresa') {
-        $data = json_decode(file_get_contents('php://input'));
-        return Vaga::listarPorEmpresa($data);
+        // $data = json_decode(file_get_contents('php://input'));
+        return Vaga::listarPorEmpresa($id);
       } else if ($tipo === 'favoritos') {
         $data = json_decode(file_get_contents('php://input'));
         return Vaga::listarFavoritos($data);

@@ -69,6 +69,13 @@
       flex-wrap: wrap;
       gap: 1rem;
 
+      &.grid__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+      }
+
       .grid__item {
         border-radius: 6px;
         max-width: fit-content;

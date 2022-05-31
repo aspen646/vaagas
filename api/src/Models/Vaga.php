@@ -35,14 +35,14 @@ class Vaga
   }
 
   //LISTAR VAGAS DE UMA EMPRESA
-  public static function listarPorEmpresa(object $data)
+  public static function listarPorEmpresa(string $id)
   {
     try {
       $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
 
       $sql = 'SELECT * FROM ' . self::$table . ' WHERE empresa_id = :empresa_id and deletado=0';
       $stmt = $connPdo->prepare($sql);
-      $stmt->bindValue(':empresa_id', $data->empresa_id);
+      $stmt->bindValue(':empresa_id', $id);
 
       $stmt->execute();
 
