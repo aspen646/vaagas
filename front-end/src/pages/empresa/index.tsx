@@ -5,13 +5,21 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 
+import Modal from "react-modal";
+
 import baseUrl from "../../config/baseUrl";
 
 import { Ring } from "@uiball/loaders";
 
+import { FiX } from "react-icons/fi";
+
 const Empresa: NextPage = () => {
   const [data, setData] = useState([]);
+  const [dataCandidatos, setDataCandidatos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalCandidatos, setModalCandidatos] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
+  const [id, setId] = useState(-1);
   const router = useRouter();
 
   function logout() {
@@ -19,7 +27,55 @@ const Empresa: NextPage = () => {
     router.push("/auth?empresa=true");
   }
 
-  useEffect(() => {
+  function loadCandidatos(idVaga: number) {
+    fetch(
+      `${baseUrl}/vaga/candidatos/${idVaga}/${localStorage.getItem("id")}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    ).then((res) => {
+      if (res.status == 200) {
+        Promise.resolve(res.json()).then((resolve) => {
+          setDataCandidatos(resolve.data);
+        });
+      } else if (res.status == 400) {
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
+      }
+    });
+  }
+
+  function deleteVaga(idVaga: number) {
+    fetch(`${baseUrl}/vaga/${idVaga}/${localStorage.getItem("id")}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    }).then((res) => {
+      if (res.status == 200) {
+        Promise.resolve(res.json()).then((resolve) => {
+          // console.log(resolve.data);
+          loadData();
+          setModalDelete(false);
+        });
+      } else if (res.status == 400) {
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+          setModalDelete(false);
+        });
+      }
+    });
+  }
+
+  function loadData() {
     if (isLoading) {
       return;
     }
@@ -46,7 +102,24 @@ const Empresa: NextPage = () => {
       }
       setIsLoading(false);
     });
+  }
+
+  useEffect(() => {
+    Modal.setAppElement("#__next");
+
+    loadData();
   }, []);
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
 
   return (
     <>
@@ -85,10 +158,99 @@ const Empresa: NextPage = () => {
         </div>
       </header>
       <main>
+        <Modal
+          isOpen={modalCandidatos}
+          // onAfterOpen={afterOpenModal}
+          // onRequestClose={closeModal}
+          onAfterOpen={() => {
+            loadCandidatos(id);
+          }}
+          onAfterClose={() => {
+            setDataCandidatos([]);
+          }}
+          style={customStyles}
+        >
+          <div className={styles.modal__wrapper}>
+            <div className={styles.modal__title}>
+              <h2>Candidatos</h2>
+              <FiX
+                size={32}
+                color="#000410cc"
+                onClick={() => {
+                  setModalCandidatos(false);
+                }}
+              />
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dataCandidatos.map((item: any) => (
+                  <tr key={item.user_id}>
+                    <td>{item.nome}</td>
+                    <td>{item.email}</td>
+                  </tr>
+                ))}
+                {dataCandidatos.length === 0 && (
+                  <tr>
+                    <td>
+                      <p>Não há candidatos.</p>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={modalDelete}
+          // onAfterOpen={afterOpenModal}
+          // onRequestClose={closeModal}
+          onAfterOpen={() => {
+            loadCandidatos(id);
+          }}
+          onAfterClose={() => {
+            setDataCandidatos([]);
+          }}
+          style={customStyles}
+        >
+          <div className={styles.close__modal__wrapper}>
+            <div className={styles.close__modal__close}>
+              <FiX
+                size={32}
+                color="#000410cc"
+                onClick={() => {
+                  setModalDelete(false);
+                }}
+              />
+            </div>
+            <h2>Deseja realmenta apagar esta vaga?</h2>
+            <p>Os candidatos não poderão mais se cadastrar para essa vaga.</p>
+            <button
+              type="button"
+              className={`${styles.delete__button} default__input`}
+              onClick={() => {
+                deleteVaga(id);
+              }}
+            >
+              Excluir
+            </button>
+          </div>
+        </Modal>
+
         <section className={`${styles.empresa__section} section`}>
           <div className={styles.container}>
             <h1>Vagas criadas</h1>
-            <div className={`${styles.grid__vagas} ${isLoading && styles.grid__loading}`}>
+            <div
+              className={`${styles.grid__vagas} ${
+                isLoading && styles.grid__loading
+              }`}
+            >
               {isLoading ? (
                 <div className={styles.grid__loading}>
                   <Ring color="#605eff" size={48} />
@@ -126,7 +288,13 @@ const Empresa: NextPage = () => {
                               />
                             </svg>
                           </a>
-                          <a className={styles.item__delete}>
+                          <a
+                            className={styles.item__delete}
+                            onClick={() => {
+                              setModalDelete(true);
+                              setId(data.id);
+                            }}
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
@@ -151,7 +319,13 @@ const Empresa: NextPage = () => {
                           ? "Remoto"
                           : `${data.cidade}, ${data.estado}`}
                       </span>
-                      <a className={styles.item__button}>
+                      <a
+                        className={styles.item__button}
+                        onClick={() => {
+                          setModalCandidatos(true);
+                          setId(data.id);
+                        }}
+                      >
                         <span>Ver candidatos</span>{" "}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

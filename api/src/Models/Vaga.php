@@ -113,14 +113,14 @@ class Vaga
   }
   
   //LISTAR QUEM CANDIDATOU A UMA VAGA
-  public static function listarCandidatosVaga(object $data)
+  public static function listarCandidatosVaga(string $idVaga, string $idEmpresa)
   {
     try {
       $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
       $sql = 'select user.id as user_id, v.id as vaga_id, v.empresa_id, user.nome, user.email from user INNER JOIN user_aplica_vaga as uaa ON user.id=uaa.user_id and uaa.status=0 INNER JOIN vaga as v ON uaa.vaga_id=v.id and deletado=0 where v.empresa_id=:empresa_id and v.id=:vaga_id;' ;
       $stmt = $connPdo->prepare($sql);
-      $stmt->bindValue(':empresa_id', $data->empresa_id);
-      $stmt->bindValue(':vaga_id', $data->vaga_id);
+      $stmt->bindValue(':empresa_id', $idEmpresa);
+      $stmt->bindValue(':vaga_id', $idVaga);
 
       $stmt->execute();
 
