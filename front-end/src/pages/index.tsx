@@ -15,12 +15,12 @@ const Home: NextPage = () => {
         localStorage.getItem("tipo") == "empresa" &&
         localStorage.getItem("id")
       ) {
-        router.push("/empresa");
+        router.push("/empresa/dashboard");
       } else if (
         localStorage.getItem("tipo") == "user" &&
         localStorage.getItem("id")
       ) {
-        router.push("/user");
+        router.push("/user/dashboard");
       }
     }
   });

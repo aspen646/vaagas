@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 
 import Modal from "react-modal";
 
-import baseUrl from "../../config/baseUrl";
+import baseUrl from "../../../config/baseUrl";
 
 import { Ring } from "@uiball/loaders";
 
@@ -24,7 +24,7 @@ const Empresa: NextPage = () => {
 
   function logout() {
     localStorage.clear();
-    router.push("/auth?empresa=true");
+    router.push("/");
   }
 
   function loadCandidatos(idVaga: number) {
@@ -137,8 +137,8 @@ const Empresa: NextPage = () => {
                   alt="Ícone de logout"
                 />
               </a>
-              <Link href="/configuration" passHref>
-                <a>
+              {/* <Link href="/profile" passHref> */}
+                <a onClick={()=>{router.push("/profile","/user/profile")}}>
                   <Image
                     src="/images/header/config.svg"
                     width={20}
@@ -146,13 +146,15 @@ const Empresa: NextPage = () => {
                     alt="Ícone de configuração"
                   />
                 </a>
+              {/* </Link> */}
+              <Link href="/user/candidato" passHref>
+                <button
+                  type="button"
+                  className={`${styles.header__button} default__input`}
+                >
+                  Área do candidato
+                </button>
               </Link>
-              <button
-                type="button"
-                className={`${styles.header__button} default__input`}
-              >
-                Criar vaga
-              </button>
             </div>
           </div>
         </div>
@@ -262,7 +264,24 @@ const Empresa: NextPage = () => {
                       <div className={styles.item__title}>
                         <h2>{data.nome}</h2>
                         <div className={styles.item__options}>
-                          <a className={styles.item__edit}>
+                          <a
+                            className={styles.item__edit}
+                            onClick={() => {
+                              router.push({
+                                pathname: "/empresa/vaga",
+                                query: {
+                                  id: data.id,
+                                  empresa_id: data.empresa_id,
+                                  nome: data.nome,
+                                  salario: data.salario,
+                                  cidade: data.cidade,
+                                  estado: data.estado,
+                                  resumo: data.resumo,
+                                  requisitos: data.requisitos,
+                                },
+                              });
+                            }}
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
