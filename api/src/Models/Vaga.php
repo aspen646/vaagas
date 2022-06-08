@@ -17,10 +17,12 @@ class Vaga
       $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
 
       if (!$data) {
-        $sql = 'SELECT * FROM ' . self::$table . " WHERE deletado=0";
+        $sql = "SELECT vaga.id, vaga.empresa_id, vaga.nome, vaga.salario, vaga.cidade, vaga.estado, vaga.resumo, vaga.requisitos, vaga.data, user.nome as empresa FROM `vaga` inner join user on user.id=vaga.empresa_id WHERE vaga.deletado=0";
+        // $sql = 'SELECT * FROM ' . self::$table . " WHERE deletado=0";
         $stmt = $connPdo->prepare($sql);
       } else {
-        $sql = 'SELECT * FROM ' . self::$table . " WHERE deletado=0 and nome like '%" . $data->filter . "%'";
+        $sql = "SELECT vaga.id, vaga.empresa_id, vaga.nome, vaga.salario, vaga.cidade, vaga.estado, vaga.resumo, vaga.requisitos, vaga.data, user.nome as empresa FROM `vaga` inner join user on user.id=vaga.empresa_id WHERE vaga.deletado=0 and vaga.nome like '%" . $data->filter . "%'";
+        // $sql = 'SELECT * FROM ' . self::$table . " WHERE deletado=0 and nome like '%" . $data->filter . "%'";
         $stmt = $connPdo->prepare($sql);
       }
 

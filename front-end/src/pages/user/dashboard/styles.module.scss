@@ -1,107 +1,5 @@
 @import "../../../styles/variables";
 
-.close__modal__wrapper {
-  text-align: center;
-
-  .close__modal__close {
-    text-align: end;
-  }
-
-  svg {
-    cursor: pointer;
-  }
-
-  .delete__button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    font-size: 16px;
-    border: unset;
-    width: unset;
-    padding: 16px 24px;
-    transition: background-color 0.3s ease-in-out;
-    background-color: $red;
-    color: $white-second;
-    margin: auto;
-
-    &:hover {
-      background-color: #c92d2d;
-    }
-  }
-
-  h2 {
-    font-weight: 600;
-    font-size: 28px;
-    line-height: 34px;
-    max-width: 337px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 16px;
-    color: $black-80;
-    font-family: $font-inter;
-  }
-
-  p {
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 130%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 32px;
-    max-width: 305px;
-    color: $black-60;
-  }
-}
-
-.modal__wrapper {
-  min-width: 450px;
-
-  .modal__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h2 {
-      font-weight: 600;
-      font-size: 28px;
-      line-height: 34px;
-      color: $black-80;
-      font-family: $font-inter;
-    }
-
-    svg {
-      cursor: pointer;
-    }
-  }
-
-  table {
-    width: 100%;
-    margin: 36px 0;
-    text-align: left;
-    color: $black-60;
-
-    tr:first-child {
-      th {
-        font-weight: 500;
-        font-size: 18px;
-      }
-    }
-
-    tr {
-      border-bottom: 1px solid rgba(0, 4, 16, 0.15);
-
-      th {
-        width: 50%;
-        font-weight: 400;
-        font-size: 16px;
-        padding: 1rem 0;
-      }
-    }
-  }
-}
-
 .header__container {
   // position: relative;
   z-index: 999;
@@ -155,117 +53,99 @@
   }
 }
 
-.empresa__section {
-  .container {
-    h1 {
-      font-weight: 600;
-      font-size: 28px;
-      line-height: 34px;
-      margin-bottom: 2rem;
-      color: $black-80;
-      font-family: $font-inter;
+.vagas__section {
+  .vagas__container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
 
-      @media (max-width: 1024px) {
-        text-align: center;
-      }
+    .descricao__container {
+      margin-bottom: 6px;
+      margin-left: 1rem;
+      font-weight: 400;
+      font-size: 16px;
+      display: block;
+      color: $black-60;
     }
 
-    .grid__vagas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+    .vagas__content {
+      background-color: $white-second;
+      color: $black-60;
+      border: 1px solid $black-15;
+      border-radius: 6px;
 
-      &.grid__loading {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 300px;
-      }
+      width: 1200px;
+      height: 660px;
+      margin-left: auto;
+      margin-right: auto;
 
-      @media (max-width: 1024px) {
-        justify-content: center;
-      }
+      .menu__content {
+        max-width: 325px;
+        overflow: auto;
+        width: 325px;
+        height: 100%;
+        border-right: 1px solid $black-15;
 
-      .grid__item {
-        border-radius: 6px;
-        max-width: fit-content;
-        min-width: 325px;
-        background-color: $white-second;
-        border: 1px solid $black-15;
-
-        @media (max-width: 375px) {
-          min-width: 300px;
+        &::-webkit-scrollbar {
+          width: 0.6rem;
+          background-color: $white-second;
         }
 
-        .item__wrapper {
-          display: flex;
-          padding: 1rem;
-          flex-direction: column;
-          gap: 6px;
+        &::-webkit-scrollbar-thumb {
+          background-color: $purple;
+          // border-radius: 4rem;
+        }
 
-          .item__title {
+        .item__menu {
+          border-bottom: 1px solid $black-15;
+          transition: background .2s ease;
+          &:hover {
+            cursor: pointer;
+            background: $white-first;
+          }
+
+          .item__wrapper {
+            padding: 1rem;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 6px;
 
-            h2 {
+            .empresa__estrela {
+              .empresa {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 130%;
+
+                color: $black-60;
+              }
+            }
+
+            .vaga {
               font-weight: 500;
               font-size: 18px;
-              line-height: 23px;
+              line-height: 130%;
+
               color: $black-80;
             }
 
-            .item__options {
-              a {
-                cursor: pointer;
+            .cidade__data {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 130%;
+              color: $black-60;
+
+              .cidade {
+                width: 50%;
               }
 
-              .item__edit {
-                cursor: pointer;
-                margin-right: 8px;
-
-                svg:hover {
-                  path {
-                    stroke: $yellow;
-                  }
-                }
+              .data {
+                width: 50%;
+                text-align: end;
               }
-              .item__delete {
-                cursor: pointer;
-
-                svg:hover {
-                  path {
-                    stroke: $red;
-                  }
-                }
-              }
-            }
-          }
-
-          .item__tipo {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 18px;
-            color: $black-60;
-          }
-
-          .item__button {
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 21px;
-
-            display: flex;
-            gap: 3px;
-
-            cursor: pointer;
-            color: $purple;
-
-            svg {
-              transition: all ease 0.3s;
-            }
-
-            &:hover svg {
-              transform: translateX(6px);
             }
           }
         }

@@ -10,8 +10,10 @@ class VagaController
   {
     if ($tipo) {
       if ($tipo === 'todos') {
-        $data = json_decode(file_get_contents('php://input'));
-        // return 'caiu no todos';
+        // $data = json_decode(file_get_contents('php://input'));
+        // return 'caiu no todos';        
+        $data = new \stdClass();
+        $data->filter = $id;
         return Vaga::listarTodos($data);
       } else if ($tipo === 'empresa') {
         // $data = json_decode(file_get_contents('php://input'));

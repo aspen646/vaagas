@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/moment": "^2.13.0",
     "@types/react-modal": "^3.13.1",
     "@uiball/loaders": "^1.2.6",
+    "moment": "^2.29.3",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
