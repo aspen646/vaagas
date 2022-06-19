@@ -6,6 +6,7 @@
 
   .header__content {
     border-bottom: 1px solid $black-15;
+
     .header__wrapper {
       padding: 1rem 4rem;
       // position: absolute;
@@ -19,6 +20,33 @@
         position: relative;
         gap: 2rem;
         padding: 2rem 1rem 4rem;
+      }
+
+      .header__input__wrapper {
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem;
+
+        height: 45px;
+        max-width: 400px;
+        width: 100%;
+        border-radius: 6px;
+        background: $white-second;
+        border: 1px solid $black-25;
+
+        .heder__button__busca {
+          width: 100%;
+          height: 100%;
+          padding: 0 0.5rem;
+
+          font-family: $font-DM;
+          border-radius: inherit;
+        }
+
+        a {
+          display: flex;
+          cursor: pointer;
+        }
       }
 
       .header__buttons {
@@ -79,8 +107,11 @@
       margin-left: auto;
       margin-right: auto;
 
+      display: flex;
+
       .menu__content {
         max-width: 325px;
+        min-width: 325px;
         overflow: auto;
         width: 325px;
         height: 100%;
@@ -98,10 +129,27 @@
 
         .item__menu {
           border-bottom: 1px solid $black-15;
-          transition: background .2s ease;
+          transition: background 0.2s ease;
+
           &:hover {
             cursor: pointer;
             background: $white-first;
+          }
+
+          &.active {
+            background-color: $purple;
+
+            .item__wrapper .empresa__estrela .empresa {
+              color: $white-first;
+            }
+
+            .item__wrapper .vaga {
+              color: $white-second;
+            }
+            
+            .item__wrapper .cidade__data {
+              color: $white-first;
+            }
           }
 
           .item__wrapper {
@@ -145,6 +193,125 @@
               .data {
                 width: 50%;
                 text-align: end;
+              }
+            }
+          }
+        }
+      }
+
+      .opened__vaga__content {
+        width: -webkit-fill-available;
+        padding: 1rem;
+
+        .opened__vaga__wrapper {
+          .vaga__title__content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .title__content__text {
+              h2 {
+                font-family: $font-inter;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 28px;
+                line-height: 130%;
+                margin-bottom: 1rem;
+                color: $black-80;
+              }
+
+              .text__city {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+              }
+
+              .text__salary {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                span {
+                  font-weight: 500;
+                  color: $black-80;
+                }
+              }
+            }
+
+            .title__content__data {
+              text-align: end;
+
+              .data__buttons {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 0.5rem;
+
+                .favoritar__button {
+                  background-color: inherit;
+                }
+
+                .candidatar__button {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  font-weight: 500;
+                  font-size: 16px;
+                  border: unset;
+                  width: unset;
+                  padding: 12px 16px;
+                  transition: background-color 0.3s ease-in-out;
+                  background-color: $green;
+                  color: $black-80;
+
+                  &:hover {
+                    background-color: #4ad874;
+                  }
+                }
+              }
+
+              span {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .vaga__body__content {
+            margin-top: 2rem;
+            h4 {
+              font-style: normal;
+              font-weight: 500;
+              font-size: 18px;
+              color: $black-80;
+              margin-bottom: 0.5rem;
+            }
+
+            .content__resume {
+              margin-bottom: 2rem;
+
+              p {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 1.25;
+                color: $black-60;
+              }
+            }
+
+            .content__requisitos {
+              ul {
+                display: flex;
+                gap: 0.5rem;
+                // list-style: circle;
+
+                li {
+                  font-style: normal;
+                  font-weight: 400;
+                  font-size: 18px;
+                  line-height: 1.25;
+                  color: $black-60;
+                }
               }
             }
           }
