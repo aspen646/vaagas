@@ -17,7 +17,7 @@ import { FiX } from "react-icons/fi";
 import { BiSearch } from "react-icons/bi";
 
 const UserDashboard: NextPage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
   const [busca, setBusca] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectVaga, setSelectVaga] = useState(-1);
@@ -94,6 +94,70 @@ const UserDashboard: NextPage = () => {
     let arrayHandler = data.split(",");
 
     return arrayHandler.map((item) => <li key={item}>{item}</li>);
+  }
+
+  function userCandidata(vaga_id: number) {
+    setIsLoading(true);
+
+    fetch(`${baseUrl}/action/candidatar`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        user_id: localStorage.getItem("id"),
+        vaga_id,
+        status: 0,
+      }),
+    }).then((res) => {
+      if (res.status == 200) {
+        setIsLoading(false);
+        Promise.resolve(res.json())
+          .then((resolve) => {
+            alert('Vaga favoritada com sucesso');
+          });
+          
+      } else if (res.status == 400) {
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
+      }
+    });
+  }
+
+  function userFavorita(vaga_id: number) {
+    setIsLoading(true);
+
+    fetch(`${baseUrl}/action/favoritar`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        user_id: localStorage.getItem("id"),
+        vaga_id,
+        status: 0,
+      }),
+    }).then((res) => {
+      if (res.status == 200) {
+        setIsLoading(false);
+        Promise.resolve(res.json())
+          .then((resolve) => {
+            alert('Vaga favoritada com sucesso');
+          });
+          
+      } else if (res.status == 400) {
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
+      }
+    });
   }
 
   useEffect(() => {
@@ -176,7 +240,7 @@ const UserDashboard: NextPage = () => {
                 />
               </a>
               {/* </Link> */}
-              <Link href="/user/candidato" passHref>
+              <Link href="/user/minhas-vagas" passHref>
                 <button
                   type="button"
                   className={`${styles.header__button} default__input`}
@@ -198,7 +262,7 @@ const UserDashboard: NextPage = () => {
             </span>
             <div className={styles.vagas__content}>
               <div className={styles.menu__content}>
-                {data.map((vaga: any, index) => (
+                {data.map((vaga: any, index: number) => (
                   <div
                     className={`${styles.item__menu} ${
                       index == selectVaga && styles.active
@@ -302,6 +366,9 @@ const UserDashboard: NextPage = () => {
                           <button
                             type="button"
                             className={styles.favoritar__button}
+                            onClick={() => {
+                              userFavorita(data[selectVaga].id);
+                            }}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -324,6 +391,9 @@ const UserDashboard: NextPage = () => {
                           <button
                             type="button"
                             className={`${styles.candidatar__button} default__input`}
+                            onClick={() => {
+                              userCandidata(data[selectVaga].id);
+                            }}
                           >
                             Candidatar
                           </button>
