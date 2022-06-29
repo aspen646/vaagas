@@ -19,11 +19,17 @@ class VagaController
         // $data = json_decode(file_get_contents('php://input'));
         return Vaga::listarPorEmpresa($id);
       } else if ($tipo === 'favoritos') {
-        $data = json_decode(file_get_contents('php://input'));
+        // $data = json_decode(file_get_contents('php://input'));
+        $data = new \stdClass();
+        $data->user_id = $id;
         return Vaga::listarFavoritos($data);
       } else if ($tipo === 'candidatos') {
         // $data = json_decode(file_get_contents('php://input'));
         return Vaga::listarCandidatosVaga($id, $idEmpresa);
+      } else if ($tipo == 'aplicadas') {
+        $data = new \stdClass();
+        $data->user_id = $id;
+        return Vaga::listarVagasAplicadas($data);
       }
     } else {
       $data = json_decode(file_get_contents('php://input'));
