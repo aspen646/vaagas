@@ -234,7 +234,7 @@ const Empresa: NextPage = () => {
                   </div>
                 ) : (
                   data.map((data: any) => (
-                    <div className={styles.grid__item} key={data.id}>
+                    <div className={styles.grid__item} key={data.vaga_id}>
                       <div className={styles.item__wrapper}>
                         <div className={styles.item__title}>
                           <h2>{data.nome}</h2>
@@ -242,7 +242,7 @@ const Empresa: NextPage = () => {
                             <a
                               className={styles.item__delete}
                               onClick={() => {
-                                deleteData(data.id);
+                                deleteData(data.vaga_id);
                               }}
                             >
                               <svg
@@ -298,7 +298,7 @@ const Empresa: NextPage = () => {
                             <a
                               className={styles.item__delete}
                               onClick={() => {
-                                deleteFavorito(data.id);
+                                deleteFavorito(data.vaga_id);
                               }}
                             >
                               <svg

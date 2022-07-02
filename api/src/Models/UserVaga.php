@@ -17,7 +17,7 @@ class UserVaga
       $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
 
       if ($data->status == '0') { //FAVORITAR
-        $sqlVerify = 'SELECT * FROM ' . self::$tableFavorita . ' WHERE user_id=:user_id and vaga_id=:vaga_id';
+        $sqlVerify = 'SELECT * FROM ' . self::$tableFavorita . ' WHERE user_id=:user_id and vaga_id=:vaga_id and status=0';
         $stmtVerify = $connPdo->prepare($sqlVerify);
         $stmtVerify->bindValue(':user_id', $data->user_id);
         $stmtVerify->bindValue(':vaga_id', $data->vaga_id);
@@ -56,7 +56,7 @@ class UserVaga
       $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
 
       if ($data->status == '0') { //CANDIDATAR
-        $sqlVerify = 'SELECT * FROM ' . self::$tableAplica . ' WHERE user_id=:user_id and vaga_id=:vaga_id';
+        $sqlVerify = 'SELECT * FROM ' . self::$tableAplica . ' WHERE user_id=:user_id and vaga_id=:vaga_id and status=0';
         $stmtVerify = $connPdo->prepare($sqlVerify);
         $stmtVerify->bindValue(':user_id', $data->user_id);
         $stmtVerify->bindValue(':vaga_id', $data->vaga_id);

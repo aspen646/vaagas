@@ -116,7 +116,7 @@ const UserDashboard: NextPage = () => {
         setIsLoading(false);
         Promise.resolve(res.json())
           .then((resolve) => {
-            alert('Vaga favoritada com sucesso');
+            alert('Você se candidatou a vaga com sucesso.');
           });
           
       } else if (res.status == 400) {
@@ -148,7 +148,7 @@ const UserDashboard: NextPage = () => {
         setIsLoading(false);
         Promise.resolve(res.json())
           .then((resolve) => {
-            alert('Vaga favoritada com sucesso');
+            alert('Vaga favoritada com sucesso.');
           });
           
       } else if (res.status == 400) {
