@@ -13,7 +13,7 @@ class User
   public static function login(object $data = null)
   {
     try{
-      $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+      $connPdo = new PDO($_ENV["DBDRIVE"] . ':host=' . $_ENV["DBHOST"] . ';dbname=' . $_ENV["DBNAME"] . ';port=' . $_ENV["DBPORT"], $_ENV["DBUSER"], $_ENV["DBPASS"]);
 
       $sql = 'SELECT * FROM ' . self::$table . ' WHERE email = :email and senha = :senha and tipo = :tipo';
       $stmt = $connPdo->prepare($sql);
@@ -38,7 +38,7 @@ class User
   //CADASTRO USUARIO/EMPRESA
   public static function cadastro(object $data)
   {
-    $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+    $connPdo = new PDO($_ENV["DBDRIVE"] . ':host=' . $_ENV["DBHOST"] . ';dbname=' . $_ENV["DBNAME"] . ';port=' . $_ENV["DBPORT"], $_ENV["DBUSER"], $_ENV["DBPASS"]);
 
     $sql = 'SELECT * FROM ' . self::$table . ' WHERE email = :email';
     $userExistsQuery = $connPdo->prepare($sql);
@@ -68,7 +68,7 @@ class User
   public static function editar(object $data)
   {
     if (isset($data->id)) {
-      $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+      $connPdo = new PDO($_ENV["DBDRIVE"] . ':host=' . $_ENV["DBHOST"] . ';dbname=' . $_ENV["DBNAME"] . ';port=' . $_ENV["DBPORT"], $_ENV["DBUSER"], $_ENV["DBPASS"]);
 
       $sql = 'UPDATE ' . self::$table . ' SET nome=?, cpfCnpj=?, senha=? WHERE id=?';
       $stmt = $connPdo->prepare($sql);
@@ -91,7 +91,7 @@ class User
   public static function selectEditar(int $id)
   {
     try {
-      $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+      $connPdo = new PDO($_ENV["DBDRIVE"] . ':host=' . $_ENV["DBHOST"] . ';dbname=' . $_ENV["DBNAME"] . ';port=' . $_ENV["DBPORT"], $_ENV["DBUSER"], $_ENV["DBPASS"]);
 
       $sql = 'SELECT * FROM ' . self::$table . ' WHERE id=? LIMIT 1';
       $stmt = $connPdo->prepare($sql);

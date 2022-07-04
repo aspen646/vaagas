@@ -14,7 +14,7 @@ class UserVaga
   public static function favoritar(object $data)
   {
     try {
-      $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+            $connPdo = new PDO($_ENV["DBDRIVE"] . ':host=' . $_ENV["DBHOST"] . ';dbname=' . $_ENV["DBNAME"] . ';port=' . $_ENV["DBPORT"], $_ENV["DBUSER"], $_ENV["DBPASS"]);
 
       if ($data->status == '0') { //FAVORITAR
         $sqlVerify = 'SELECT * FROM ' . self::$tableFavorita . ' WHERE user_id=:user_id and vaga_id=:vaga_id and status=0';
@@ -53,7 +53,7 @@ class UserVaga
   public static function candidatar(object $data)
   {
     try {
-      $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
+            $connPdo = new PDO($_ENV["DBDRIVE"] . ':host=' . $_ENV["DBHOST"] . ';dbname=' . $_ENV["DBNAME"] . ';port=' . $_ENV["DBPORT"], $_ENV["DBUSER"], $_ENV["DBPASS"]);
 
       if ($data->status == '0') { //CANDIDATAR
         $sqlVerify = 'SELECT * FROM ' . self::$tableAplica . ' WHERE user_id=:user_id and vaga_id=:vaga_id and status=0';

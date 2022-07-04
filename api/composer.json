@@ -14,5 +14,7 @@
       "email": "arthur12souza@hotmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "vlucas/phpdotenv": "^5.4"
+  }
 }

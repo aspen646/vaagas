@@ -6,7 +6,11 @@ header('Content-Type: application/json');
 
 require_once '../vendor/autoload.php';
 
-
+// $connPdo = new PDO(DBDRIVE . ':host=' . DBHOST . ';dbname=' . DBNAME . ';port=' . DBPORT, DBUSER, DBPASS);
+// $sql = "SHOW TABLES FROM " . DBNAME;
+// $stmt = $connPdo->prepare($sql);
+// $stmt->execute();
+// var_dump($stmt->fetch(PDO::FETCH_ASSOC));
 
 // api/user/1
 if ($_GET['url']) {
@@ -35,10 +39,4 @@ if ($_GET['url']) {
   }
 }
 
-// $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
-// $sql = "SHOW TABLES FROM " . DBNAME;
-// $stmt = $connPdo->prepare($sql);
 
-// $stmt->execute();
-
-// var_dump($stmt->fetch(PDO::FETCH_ASSOC));
