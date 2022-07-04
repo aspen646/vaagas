@@ -93,7 +93,7 @@ class User
     try {
       $connPdo = new PDO(DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME, DBUSER, DBPASS);
 
-      $sql = 'SELECT * FROM ' . self::$table . ' WHERE id=?';
+      $sql = 'SELECT * FROM ' . self::$table . ' WHERE id=? LIMIT 1';
       $stmt = $connPdo->prepare($sql);
       $stmt->bindValue(1, $id);
       $stmt->execute();
@@ -103,7 +103,7 @@ class User
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
       } else {
         http_response_code(400);
-        throw new Exception("Esse usuário não existe.");
+        throw new Exception("Este usuário não existe.");
       }
     } catch (\Exception $e) {
       throw new Exception($e);

@@ -5,19 +5,19 @@ import { useRouter } from "next/router";
 
 import styles from "./styles.module.scss";
 
-
 import { Ring } from "@uiball/loaders";
 
 import { FiArrowLeft } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import baseUrl from "../../config/baseUrl";
 
 const Profile: NextPage = () => {
   const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [senha, setSenha] = useState("");
+  const [tipo, setTipo] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [empresaMode, setEmpresaMode] = useState(false);
 
   const router = useRouter();
 
@@ -26,7 +26,72 @@ const Profile: NextPage = () => {
     router.push("/");
   }
 
-  function handler() {}
+  function handler(e: any) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    fetch(`${baseUrl}/auth/`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        id:localStorage.getItem('id'),
+        nome,
+        cpfCnpj,
+        senha,
+      }),
+    }).then((res) => {
+      if (res.status == 200) {
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          alert("Dados atualizados com sucesso.");
+        });
+      } else if (res.status == 400) {
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
+      }
+    });
+  }
+
+  function loadProfile() {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    fetch(`${baseUrl}/auth/${localStorage.getItem("id")}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    }).then((res) => {
+      if (res.status == 200) {
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          setNome(resolve.data[0].nome);
+          setCpfCnpj(resolve.data[0].cpfCnpj);
+          setSenha(resolve.data[0].senha);
+          setEmail(resolve.data[0].email);
+          setTipo(resolve.data[0].tipo);
+        });
+      } else if (res.status == 400) {
+        setIsLoading(false);
+        Promise.resolve(res.json()).then((resolve) => {
+          alert(resolve.data);
+        });
+      }
+    });
+  }
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
 
   return (
     <>
@@ -66,14 +131,28 @@ const Profile: NextPage = () => {
         <section className={`${styles.form__section} section`}>
           <div className={styles.form__container}>
             <div className={styles.form__title}>
-              <Link href="/empresa/dashboard" passHref>
+              <Link
+                href={tipo == "user" ? "/user/dashboard" : "/empresa/dashboard"}
+                passHref
+              >
                 <a>
                   <FiArrowLeft size={28} color="#000410" />
                 </a>
               </Link>
               <h1>Editar dados</h1>
             </div>
-            <form onSubmit={handler} method="post">
+            <form onSubmit={handler}>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                className={`default__input`}
+                value={email}
+                onChange={(data) => setEmail(data.target.value)}
+                disabled
+              />
+              <label htmlFor="email">Nome</label>
               <input
                 type="text"
                 name="nome"
@@ -83,24 +162,17 @@ const Profile: NextPage = () => {
                 onChange={(data) => setNome(data.target.value)}
                 required
               />
+              <label htmlFor="email">{tipo == "user" ? "CPF" : "CNPJ"}</label>
               <input
                 type="text"
                 name="cpfCnpj"
-                placeholder={empresaMode ? "CNPJ" : "CPF"}
+                placeholder={tipo == "user" ? "CPF" : "CNPJ"}
                 className={`default__input`}
                 value={cpfCnpj}
                 onChange={(data) => setCpfCnpj(data.target.value)}
                 required
               />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className={`default__input`}
-                value={email}
-                onChange={(data) => setEmail(data.target.value)}
-                required
-              />
+              <label htmlFor="email">Senha</label>
               <input
                 type="password"
                 name="senha"
@@ -114,7 +186,7 @@ const Profile: NextPage = () => {
                 type="submit"
                 className={`${styles.form__button} default__input`}
               >
-                {!isLoading ? "Cadastrar" : <Ring color="#000410" size={48} />}
+                {!isLoading ? "Salvar" : <Ring color="#000410" size={48} />}
               </button>
             </form>
           </div>

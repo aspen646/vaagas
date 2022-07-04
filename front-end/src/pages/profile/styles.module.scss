@@ -114,15 +114,19 @@
 
     form {
       width: fit-content;
-  
+
       @media (max-width: 960px) {
         margin: auto;
       }
-  
-      input:not(last-child){
+
+      input:not(last-child) {
         margin-bottom: 1rem;
       }
-  
+
+      input:disabled {
+        background-color: rgb(233, 232, 232);
+      }
+
       .form__button {
         display: flex;
         flex-direction: column;
@@ -136,28 +140,28 @@
         transition: background-color 0.3s ease-in-out;
         background-color: $green;
         color: $black-80;
-  
+
         &:hover {
           background-color: #4ad874;
         }
       }
-  
+
       .form__cadastro {
         display: inline-block;
         display: flex;
         justify-content: center;
         width: 100%;
-  
+
         a {
           cursor: pointer;
           font-weight: 500;
           font-size: 16px;
           color: $black-80;
-  
+
           &:hover {
             color: $purple;
           }
-  
+
           span {
             color: $purple;
           }

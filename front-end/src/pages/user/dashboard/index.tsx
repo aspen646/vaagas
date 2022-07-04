@@ -229,7 +229,7 @@ const UserDashboard: NextPage = () => {
               {/* <Link href="/profile" passHref> */}
               <a
                 onClick={() => {
-                  router.push("/profile", "/user/profile");
+                  router.push("/profile");
                 }}
               >
                 <Image
@@ -305,7 +305,7 @@ const UserDashboard: NextPage = () => {
                   <div className={styles.opened__vaga__wrapper}>
                     <div className={styles.vaga__title__content}>
                       <div className={styles.title__content__text}>
-                        <h2>{`${data[selectVaga].nome} - ${data[selectVaga].empresa}`}</h2>
+                        <h2>{`${data[selectVaga].nome || ""} - ${data[selectVaga].empresa || ""}`}</h2>
                         <div className={styles.text__city}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
