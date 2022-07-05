@@ -64,7 +64,8 @@ const UserDashboard: NextPage = () => {
       if (isLoading) {
         return;
       }
-
+      
+      setSelectVaga(-1);
       setIsLoading(true);
       fetch(`${baseUrl}/vaga/todos/${search}`, {
         method: "GET",
