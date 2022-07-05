@@ -12,6 +12,8 @@ require_once '../vendor/autoload.php';
 // $stmt->execute();
 // var_dump($stmt->fetch(PDO::FETCH_ASSOC));
 
+echo $_GET['url'];
+
 // api/user/1
 if ($_GET['url']) {
   $url = explode('/', $_GET['url']);
