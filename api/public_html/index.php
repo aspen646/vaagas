@@ -1,9 +1,14 @@
 <?php
+// header('Access-Control-Allow-Origin: *');
+// header("Access-Control-Allow-Headers: X-Requested-With");
+// header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD, TRACE, CONNECT');
+// header('Content-Type: application/json');
+// header('Access-Control-Max-Age: 86400');
+
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: X-Requested-With");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD, TRACE, CONNECT');
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Methods: *');
 header('Content-Type: application/json');
-header('Access-Control-Max-Age: 86400');
 
 require_once '../vendor/autoload.php';
 
@@ -13,7 +18,7 @@ require_once '../vendor/autoload.php';
 // $stmt->execute();
 // var_dump($stmt->fetch(PDO::FETCH_ASSOC));
 
-echo $_GET['url'];
+// echo $_GET['url'];
 
 // api/user/1
 if ($_GET['url']) {

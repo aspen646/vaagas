@@ -23,7 +23,8 @@ export function LoginForm() {
     fetch(`${baseUrl}/auth/login`, {
       method: "POST",
       headers: {
-        Accept: "application/json, text/plain, */*",
+        Accept: 
+        "application/json, text/plain, */*",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
