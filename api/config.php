@@ -8,8 +8,8 @@ $dotenv->load();
 
 //MySQL
 const DBDRIVE = 'mysql';
-const DBHOST = 'localhost';
-const DBNAME = 'vaagas';
+const DBHOST = 'containers-us-west-41.railway.app';
+const DBNAME = 'railway';
 const DBUSER = 'root';
-CONST DBPORT = '3307';
-const DBPASS = '';
+CONST DBPORT = '5478';
+const DBPASS = 'v14JaS9ERNO1IwEzpzZc';

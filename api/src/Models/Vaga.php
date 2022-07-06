@@ -32,7 +32,7 @@ class Vaga
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (\Exception $e) {
       http_response_code(400);
-      throw new Exception('Erro ao listar vagas.');
+      throw new Exception($e);
     }
   }
 
